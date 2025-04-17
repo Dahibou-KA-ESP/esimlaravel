@@ -1,0 +1,157 @@
+
+
+$card-bg: #506E61;
+$text-color: #fff;
+
+html{
+  font-size: 62.5%;
+}
+
+body{
+  margin: 5rem;
+  background: lighten($card-bg, 50%);
+}
+
+p, ul{
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 300;
+}
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+ul{
+  margin-left: 3rem;
+  
+  li{
+    position: relative;
+    line-height: 2.6rem;
+    
+    &:after{
+      position: absolute;
+      content: "";
+      background: {
+        image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 576 512' width='100' title='star'%3E%3Cpath fill='rgba(255,255,255,0.6)' d='M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z' /%3E%3C/svg%3E");
+        repeat: no-repeat;
+        position: center;
+        size: contain;
+      }
+      width: 1.2rem;
+      height: 1.2rem;
+      top: 5px;
+      left: -2rem;
+    }
+  }
+}
+
+.pipe{
+  padding: 0 1rem;
+}
+
+.bold{
+  font-weight: 500;
+}
+
+.cards{
+
+  @media only screen and (min-width: 800px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 4rem;
+  }
+  
+  @media only screen and (min-width: 1100px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.card {
+  background: $card-bg;
+  border-radius: 3rem;
+  overflow: hidden;
+  
+  @media only screen and (max-width: 800px) {
+    margin-bottom: 4rem;
+  }
+  
+  .image{
+    position: relative;
+    
+    img{
+      display: block;
+      width: 100%;
+    }
+    
+    .note{
+      position: absolute;
+      font-family: 'Nixie One', cursive;
+      border-top-left-radius: 1rem;
+      right: 0;
+      bottom: 0;
+      padding: 8px 1.3rem;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      background: $text-color;
+      color: #0d0c0c;
+    }
+  }
+  
+  &__content{
+    padding: 3rem 2rem;
+    
+    p:not(.list-label){
+      margin-bottom: 1rem;
+    }
+    
+    ul{
+      margin-bottom: 2rem;
+    }
+    
+    .list-label{
+      margin-top: 2rem;
+    }
+    
+    .bold{
+      font-weight: 400;
+    }
+  }
+  
+  h2, h3, p, ul{
+    color: $text-color;
+  }
+  
+  h2, h3{
+    font-family: 'Nixie One', cursive;
+  }
+  
+  h2{
+    font-size: 2.5rem;
+    margin-bottom: 2.8rem;
+    border-bottom: 2px solid rgba($text-color, 0.5);
+    padding-bottom: 2.5rem;
+    line-height: 3.2rem;
+    
+    @media only screen and (max-width: 600px) {
+      font-size: 2rem;
+      line-height: 2.4rem;
+    }
+  }
+  
+  h3{
+    max-width: 60%;
+    font-size: 1.8rem;
+    margin: 2.5rem 0 1rem;
+    line-height: 2.8rem;
+  }
+  
+  .add-ons{
+    border: 1px solid rgba($text-color, 0.3);
+    padding: 1rem;
+    border-radius: 1rem;
+    font-size: 1.5rem;
+  }
+}

@@ -1,40 +1,64 @@
 <?php
 
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\RegisterController;
+use App\Http\Controllers\API\ProductController;
 
-Route::get('/', function () {
-    return response()->json([
-        'message' => 'Welcome to the API',
-        'description' => 'jetsimo pour une connexion partout',
-        'version' => '1.0.0',
-    ]);
-});
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
+|
+*/
 
-Route::post('login', [UserController::class, 'login'])->name('login');  // Route pour se connecter
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', [UserController::class, 'show']);  // Afficher les informations de l'utilisateur
-    Route::put('/user', [UserController::class, 'update']); // Mettre à jour le profil de l'utilisateur
-    Route::post('/user/logout', [UserController::class, 'logout']); // Déconnexion de l'utilisateur
-});
-
-Route::prefix('/clients')->name('client')->group(function () {
-    Route::get('', [ClientController::class, 'index'])->name('.index');
-    Route::post('', [ClientController::class, 'store'])->name('.store');
-    Route::get('/{client}', [ClientController::class, 'show'])->name('.show');
-    Route::put('/{client}', [ClientController::class, 'update'])->name('.update');
-    Route::delete('/{client}', [ClientController::class, 'destroy'])->name('.destroy');
-});
-
-// Route::middleware(['auth:sanctum', 'can:is-reseller'])->group(function () {
-//     // Pour les revendeurs
-//     Route::post('/esims/bulk', [ESIMController::class, 'bulkBuy']); // Acheter des eSIMs en gros
-//     Route::get('/users/{userId}/esims', [ESIMController::class, 'getUserEsims']); // Voir les eSIMs d'un utilisateur spécifique
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
 // });
+Route::controller(RegisterController::class)->group(function(){
+    Route::post('register', 'register');
+    Route::post('login', 'login');
+});
+        
+Route::middleware('auth:sanctum')->group( function () {
+    Route::resource('products', ProductController::class);
+   
+     
+}); 
+Route::middleware('api.key')->group(function () {
+    // Définissez vos routes API ici
+    
+    Route::get('compagnie', [App\Http\Controllers\API\ApiController::class, 'compagnieApi']);
+    Route::post('donnees-api', [App\Http\Controllers\API\ApiController::class, 'traiterDonneesApi']);
+    Route::post('traiter-pack', [App\Http\Controllers\API\ApiController::class, 'traiterDonneesPackApi']);
+    Route::post('sponsoringApi', [App\Http\Controllers\API\ApiController::class, 'sponsoringApi']);
+    Route::post('sponsoringapi2', [App\Http\Controllers\API\ApiController::class, 'sponsoring']);
+    // Route::post('achat-wavee', [App\Http\Controllers\API\ApiController::class, 'paiementWave']);
+    Route::post('add-client', [App\Http\Controllers\API\ApiController::class, 'createCliApi']);
+    Route::post('ocr', [App\Http\Controllers\API\ApiController::class, 'OCR']);
+    Route::post('sante-om', [App\Http\Controllers\API\ApiController::class, 'OmSante']);
+    Route::post('sante-wave', [App\Http\Controllers\API\ApiController::class, 'WaveSante']);
+    Route::post('achat-om', [App\Http\Controllers\API\ApiController::class, 'paiementOM']);
+    Route::post('send-sms', [App\Http\Controllers\API\ApiController::class, 'sendSms']);
+
+
+    Route::post('sim-voyage', [App\Http\Controllers\API\ApiVoyage::class, 'TripApi']);
+    Route::get('compagnieVoyage', [App\Http\Controllers\API\ApiVoyage::class, 'compagnieApi']);
+    Route::get('pays', [App\Http\Controllers\API\ApiVoyage::class, 'PaysApi']);
+    Route::post('add-client_voyage', [App\Http\Controllers\API\ApiVoyage::class, 'createCliApi']);
+    Route::post('gettoken', [App\Http\Controllers\API\ApiVoyage::class, 'getToken']);
+    Route::post('achat-om-v', [App\Http\Controllers\API\ApiVoyage::class, 'paiementOMV']);
+
+
+});
+
+// Route::post('sim-voyage', [App\Http\Controllers\API\ApiVoyage::class, 'TripApi']);
+
+
+
+
