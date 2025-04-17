@@ -18,12 +18,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-<<<<<<< .mine
-        // Exécuter la commande chaque jour à 8h
+
         $schedule->command('email:send-insurance-reminders')->dailyAt('08:00');
-||||||| .r420
-        // $schedule->command('inspire')->hourly();
-=======
         $schedule->call(function () {
             
             $sevenDaysFromNow = Carbon::now()->addDays(7)->format('Y-m-d');
@@ -40,7 +36,6 @@ class Kernel extends ConsoleKernel
 
             Log::info('Scheduled task completed.');
         })->cron('45 16 * * *');
->>>>>>> .r489
     }
     /**
      * Register the commands for the application.
